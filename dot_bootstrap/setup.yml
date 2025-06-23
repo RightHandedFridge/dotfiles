@@ -37,12 +37,6 @@
         state: present
         update_cache: true
 
-    - name: Remove Pacman Packages
-      ansible.builtin.pacman:
-        name:
-          # Plasma Discover
-          - discover
-        state: absent
     - name: Install flatpak packages
       community.general.flatpak:
         name:
