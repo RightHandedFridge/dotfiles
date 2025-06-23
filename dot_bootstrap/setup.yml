@@ -8,7 +8,7 @@
     remote_regular_user: "{{ ansible_env.SUDO_USER or ansible_user_id }}"
 
   tasks:
-    - name: Pacman Packages
+    - name: Install Pacman Packages
       ansible.builtin.pacman:
         name:
           # Build Tools
@@ -31,9 +31,18 @@
 
           # DE
           - flatpak-kcm
+
+          # GUI
+          - alacritty
         state: present
         update_cache: true
 
+    - name: Remove Pacman Packages
+      ansible.builtin.pacman:
+        name:
+          # Plasma Discover
+          - discover
+      state: absent
     - name: Install flatpak packages
       community.general.flatpak:
         name:
