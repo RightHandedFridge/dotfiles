@@ -66,6 +66,16 @@
             - org.kde.krita
 
     # --- Install yay AUR Helper from source ---
+    - name: Check if yay binary exists
+      ansible.builtin.command: which yay
+      register: yay_check
+      ignore_errors: true
+      changed_when: false # This command doesn't change system state
+
+    - name: Set fact if yay exists
+      ansible.builtin.set_fact:
+        yay_exists: "{{ yay_check.rc == 0 }}"
+
     - name: Define temporary build directory for yay
       ansible.builtin.set_fact:
         yay_build_dir: "/tmp/yay_build_{{ ansible_facts['user_id'] }}"
