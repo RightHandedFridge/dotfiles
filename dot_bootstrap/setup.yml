@@ -42,7 +42,7 @@
         name:
           # Plasma Discover
           - discover
-      state: absent
+        state: absent
     - name: Install flatpak packages
       community.general.flatpak:
         name:
