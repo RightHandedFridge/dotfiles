@@ -2,6 +2,7 @@
 _k_friendly_name=Activity Manager
 switch-to-activity-29904c27-f18f-4ddd-b274-2bea6d773f0d=none,none,Switch to activity "Default"
 switch-to-activity-29acd990-cbfa-4fb4-b978-b63da54b9297=none,none,Switch to activity "Default"
+switch-to-activity-389afb70-84db-401a-af2f-bc88f4a15215=none,none,Switch to activity "Default"
 switch-to-activity-8332bde2-9795-4e7c-90f6-b8628c2e85d3=none,none,Switch to activity "Default"
 
 [KDE Keyboard Layout Switcher]
@@ -12,12 +13,6 @@ _k_friendly_name=Keyboard Layout Switcher
 [kaccess]
 Toggle Screen Reader On and Off=Meta+Alt+S,Meta+Alt+S,Toggle Screen Reader On and Off
 _k_friendly_name=Accessibility
-
-[kcm_touchpad]
-Disable Touchpad=Touchpad Off,Touchpad Off,
-Enable Touchpad=Touchpad On,Touchpad On,
-Toggle Touchpad=Touchpad Toggle\tMeta+Ctrl+Touchpad Toggle\tMeta+Ctrl+Zenkaku Hankaku,Touchpad Toggle\tTouchpad Toggle\tMeta+Ctrl+Touchpad Toggle\tMeta+Ctrl+Zenkaku Hankaku,
-_k_friendly_name=Touchpad
 
 [kmix]
 _k_friendly_name=Audio Volume
@@ -60,40 +55,40 @@ ExposeClassCurrentDesktop=none,none,Toggle Present Windows (Window class on curr
 Grid View=Meta+G,Meta+G,Toggle Grid View
 Increase Opacity=none,,Increase Opacity of Active Window by 5%
 Kill Window=Alt+Shift+Q,Meta+Ctrl+Esc,Kill Window
-KrohnkiteBTreeLayout=,none,Krohnkite: BTree Layout
-KrohnkiteColumnsLayout=,none,Krohnkite: Columns Layout
-KrohnkiteDecrease=,none,Krohnkite: Decrease
+KrohnkiteBTreeLayout=none,none,Krohnkite: BTree Layout
+KrohnkiteColumnsLayout=none,none,Krohnkite: Columns Layout
+KrohnkiteDecrease=none,none,Krohnkite: Decrease
 KrohnkiteFloatAll=Meta+Shift+F,none,Krohnkite: Toggle Float All
-KrohnkiteFloatingLayout=,none,Krohnkite: Floating Layout
-KrohnkiteFocusDown=,none,Krohnkite: Focus Down
-KrohnkiteFocusLeft=,none,Krohnkite: Focus Left
-KrohnkiteFocusNext=,none,Krohnkite: Focus Next
+KrohnkiteFloatingLayout=none,none,Krohnkite: Floating Layout
+KrohnkiteFocusDown=none,none,Krohnkite: Focus Down
+KrohnkiteFocusLeft=none,none,Krohnkite: Focus Left
+KrohnkiteFocusNext=none,none,Krohnkite: Focus Next
 KrohnkiteFocusPrev=Meta+\\,,none,Krohnkite: Focus Previous
-KrohnkiteFocusRight=,none,Krohnkite: Focus Right
-KrohnkiteFocusUp=,none,Krohnkite: Focus Up
-KrohnkiteGrowHeight=,none,Krohnkite: Grow Height
+KrohnkiteFocusRight=none,none,Krohnkite: Focus Right
+KrohnkiteFocusUp=none,none,Krohnkite: Focus Up
+KrohnkiteGrowHeight=none,none,Krohnkite: Grow Height
 KrohnkiteIncrease=Meta+I,none,Krohnkite: Increase
 KrohnkiteMonocleLayout=Meta+M,none,Krohnkite: Monocle Layout
-KrohnkiteNextLayout=,none,Krohnkite: Next Layout
-KrohnkitePreviousLayout=,none,Krohnkite: Previous Layout
-KrohnkiteQuarterLayout=,none,Krohnkite: Quarter Layout
-KrohnkiteRotate=,none,Krohnkite: Rotate
-KrohnkiteRotatePart=,none,Krohnkite: Rotate Part
-KrohnkiteSetMaster=,none,Krohnkite: Set master
-KrohnkiteShiftDown=,none,Krohnkite: Move Down/Next
+KrohnkiteNextLayout=none,none,Krohnkite: Next Layout
+KrohnkitePreviousLayout=none,none,Krohnkite: Previous Layout
+KrohnkiteQuarterLayout=none,none,Krohnkite: Quarter Layout
+KrohnkiteRotate=none,none,Krohnkite: Rotate
+KrohnkiteRotatePart=none,none,Krohnkite: Rotate Part
+KrohnkiteSetMaster=none,none,Krohnkite: Set master
+KrohnkiteShiftDown=none,none,Krohnkite: Move Down/Next
 KrohnkiteShiftLeft=Alt+Shift+J,none,Krohnkite: Move Left
 KrohnkiteShiftRight=Alt+Shift+L,none,Krohnkite: Move Right
-KrohnkiteShiftUp=,none,Krohnkite: Move Up/Prev
-KrohnkiteShrinkHeight=,none,Krohnkite: Shrink Height
-KrohnkiteShrinkWidth=,none,Krohnkite: Shrink Width
-KrohnkiteSpiralLayout=,none,Krohnkite: Spiral Layout
-KrohnkiteSpreadLayout=,none,Krohnkite: Spread Layout
-KrohnkiteStackedLayout=,none,Krohnkite: Stacked Layout
-KrohnkiteStairLayout=,none,Krohnkite: Stair Layout
-KrohnkiteTileLayout=,none,Krohnkite: Tile Layout
+KrohnkiteShiftUp=none,none,Krohnkite: Move Up/Prev
+KrohnkiteShrinkHeight=none,none,Krohnkite: Shrink Height
+KrohnkiteShrinkWidth=none,none,Krohnkite: Shrink Width
+KrohnkiteSpiralLayout=none,none,Krohnkite: Spiral Layout
+KrohnkiteSpreadLayout=none,none,Krohnkite: Spread Layout
+KrohnkiteStackedLayout=none,none,Krohnkite: Stacked Layout
+KrohnkiteStairLayout=none,none,Krohnkite: Stair Layout
+KrohnkiteTileLayout=none,none,Krohnkite: Tile Layout
 KrohnkiteToggleFloat=Meta+F,none,Krohnkite: Toggle Float
-KrohnkiteTreeColumnLayout=,none,Krohnkite: Tree Column Layout
-KrohnkitegrowWidth=,none,Krohnkite: Grow Width
+KrohnkiteTreeColumnLayout=none,none,Krohnkite: Tree Column Layout
+KrohnkitegrowWidth=none,none,Krohnkite: Grow Width
 KrohnkitetoggleDock=none,none,Krohnkite: Toggle Dock
 Move Tablet to Next Output=none,none,Move the tablet to the next output
 MoveMouseToCenter=Meta+F6,Meta+F6,Move Mouse to Centre
@@ -171,14 +166,14 @@ Switch to Screen to the Left=none,,Switch to Screen to the Left
 Switch to Screen to the Right=none,,Switch to Screen to the Right
 Toggle Night Color=none,none,Suspend/Resume Night Light
 Toggle Window Raise/Lower=none,,Toggle Window Raise/Lower
-Walk Through Windows=Alt+Tab,Alt+Tab,Walk Through Windows
-Walk Through Windows (Reverse)=Alt+Shift+Tab,Alt+Shift+Tab,Walk Through Windows (Reverse)
-Walk Through Windows Alternative=none,,Walk Through Windows Alternative
-Walk Through Windows Alternative (Reverse)=none,,Walk Through Windows Alternative (Reverse)
-Walk Through Windows of Current Application=Alt+`,Alt+`,Walk Through Windows of Current Application
-Walk Through Windows of Current Application (Reverse)=Alt+~,Alt+~,Walk Through Windows of Current Application (Reverse)
-Walk Through Windows of Current Application Alternative=none,,Walk Through Windows of Current Application Alternative
-Walk Through Windows of Current Application Alternative (Reverse)=none,,Walk Through Windows of Current Application Alternative (Reverse)
+Walk Through Windows=Alt+Tab,Meta+Tab\tAlt+Tab,Walk Through Windows
+Walk Through Windows (Reverse)=Alt+Shift+Tab,Meta+Shift+Tab\tAlt+Shift+Tab,Walk Through Windows (Reverse)
+Walk Through Windows Alternative=none,none,Walk Through Windows Alternative
+Walk Through Windows Alternative (Reverse)=none,none,Walk Through Windows Alternative (Reverse)
+Walk Through Windows of Current Application=Alt+`,Meta+`\tAlt+`,Walk Through Windows of Current Application
+Walk Through Windows of Current Application (Reverse)=Alt+~,Meta+~\tAlt+~,Walk Through Windows of Current Application (Reverse)
+Walk Through Windows of Current Application Alternative=none,none,Walk Through Windows of Current Application Alternative
+Walk Through Windows of Current Application Alternative (Reverse)=none,none,Walk Through Windows of Current Application Alternative (Reverse)
 Window Above Other Windows=none,,Keep Window Above Others
 Window Below Other Windows=none,,Keep Window Below Others
 Window Close=Alt+Q,Alt+F4,Close Window
@@ -307,6 +302,7 @@ clipboard_action=Meta+Ctrl+X,Meta+Ctrl+X,Automatic Action Popup Menu
 cycle-panels=Meta+Alt+P,Meta+Alt+P,Move keyboard focus between panels
 cycleNextAction=none,,Next History Item
 cyclePrevAction=none,,Previous History Item
+edit_clipboard=,,Edit Contents…
 manage activities=Meta+Q,Meta+Q,Show Activity Switcher
 next activity=Meta+A,none,Walk through activities
 previous activity=Meta+Shift+A,none,Walk through activities (Reverse)
@@ -319,10 +315,18 @@ switch to next activity=none,,Switch to Next Activity
 switch to previous activity=none,,Switch to Previous Activity
 toggle do not disturb=none,,Toggle do not disturb
 
+[services][Alacritty.desktop]
+_launch=Meta+Return
+
+[services][com.vscodium.codium.desktop]
+_launch=Meta+C
+
+[services][io.gitlab.librewolf-community.desktop]
+_launch=Meta+W
+
 [services][org.kde.krunner.desktop]
 _launch=Meta+S
 
 [services][org.kde.spectacle.desktop]
 RectangularRegionScreenShot=Meta+Shift+S
 _launch=Print
-
