@@ -1,3 +1,4 @@
+---
 - name: Setup
   hosts: localhost
   connection: local
@@ -37,6 +38,7 @@
         state: present
         update_cache: true
 
+    # --- Install and Configure Flatpaks --- 
     - name: Install flatpak packages
       community.general.flatpak:
         name:
@@ -46,7 +48,7 @@
             - org.prismlauncher.PrismLauncher
             - com.heroicgameslauncher.hgl
 
-            # Browser
+            #Browser
             - dev.vencord.Vesktop
             - io.gitlab.librewolf-community
 
@@ -65,12 +67,19 @@
             - com.github.PintaProject.Pinta
             - org.kde.krita
 
+            #Themes
+            - org.kde.KStyle.Kvantum
+
+    - name: Fix Flatpak Themes
+      ansible.builtin.command: flatpak override --env=QT_STYLE_OVERRIDE=kvantum --filesystem=xdg-config/Kvantum:ro
+      become: true
+    
     # --- Install yay AUR Helper from source ---
     - name: Check if yay binary exists
       ansible.builtin.command: which yay
       register: yay_check
       ignore_errors: true
-      changed_when: false # This command doesn't change system state
+      changed_when: false
 
     - name: Set fact if yay exists
       ansible.builtin.set_fact:
@@ -87,6 +96,7 @@
         mode: '0755'
         owner: "{{ remote_regular_user }}"
         group: "{{ remote_regular_user }}"
+      when: not yay_exists
 
     - name: Clone yay AUR repository
       ansible.builtin.git:
@@ -95,6 +105,7 @@
         force: true
       become: false
       become_user: "{{ remote_regular_user }}"
+      when: not yay_exists
 
     - name: Build and install yay
       ansible.builtin.command: makepkg -si --noconfirm
@@ -102,7 +113,12 @@
         chdir: "{{ yay_build_dir }}"
       become: false
       become_user: "{{ remote_regular_user }}"
+      when: not yay_exists
+
     - name: Remove yay build directory
       ansible.builtin.file:
         path: "{{ yay_build_dir }}"
         state: absent
+      when: not yay_exists
+
+    
