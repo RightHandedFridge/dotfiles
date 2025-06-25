@@ -29,6 +29,7 @@
           - tealdeer
           - usbutils
           - btop
+          - gwenview
 
           # DE
           - flatpak-kcm
@@ -38,6 +39,11 @@
 
           # Themes
           - kvantum
+
+          # Creative
+          - krita
+          - kdenlive
+          - libreoffice
         state: present
         update_cache: true
 
@@ -58,17 +64,13 @@
             #Tools
             - com.vscodium.codium
             - org.keepassxc.KeePassXC
-            - org.libreoffice.LibreOffice
             - org.videolan.VLC
             - com.protonvpn.www
 
             #Creative
             - com.obsproject.Studio
-            - org.kde.kdenlive
             - org.qbittorrent.qBittorrent
             - com.github.wwmm.easyeffects
-            - com.github.PintaProject.Pinta
-            - org.kde.krita
 
             #Themes
             - org.kde.KStyle.Kvantum/x86_64/6.6
