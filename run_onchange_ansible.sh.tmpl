@@ -1,5 +1,11 @@
 #!/bin/bash
+# This comment line below triggers Chezmoi to re-run this script
+# if the content of 'dot_bootstrap/setup.yml' changes.
+# chezmoi:checksum {{ joinPath .chezmoi.sourceDir "dot_bootstrap/setup.yml" }}
 
 if command -v ansible-playbook &> /dev/null; then
     ansible-playbook -vv {{ joinPath .chezmoi.sourceDir "dot_bootstrap/setup.yml" | quote }} --ask-become-pass
+else
+    echo "Ansible playbook not found. Please install Ansible." >&2
+    exit 1
 fi
