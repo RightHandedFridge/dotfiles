@@ -76,7 +76,7 @@
             - org.kde.KStyle.Kvantum/x86_64/6.6
 
     - name: Fix Flatpak Themes
-      ansible.builtin.command: flatpak override --env=QT_STYLE_OVERRIDE=kvantum --filesystem=xdg-config/Kvantum:ro
+      ansible.builtin.command: flatpak override --env=QT_STYLE_OVERRIDE=kvantum --env=GTK_THEME=WhiteSur-Dark --filesystem=xdg-config/Kvantum:ro
       become: true
     
     # --- Install yay AUR Helper from source ---
