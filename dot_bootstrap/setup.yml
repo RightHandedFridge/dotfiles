@@ -35,6 +35,9 @@
 
           # GUI
           - alacritty
+
+          # Themes
+          - kvantum
         state: present
         update_cache: true
 
@@ -120,5 +123,45 @@
         path: "{{ yay_build_dir }}"
         state: absent
       when: not yay_exists
+
+      # --- Install WhiteSur GTK Theme ---
+    - name: Define temporary build directory for WhiteSur GTK
+      ansible.builtin.set_fact:
+        theme_gtk_build_dir: "/tmp/theme_gtk_build_{{ ansible_facts['user_id'] }}"
+
+    - name: Create WhiteSur GTK build directory
+      ansible.builtin.file:
+        path: "{{ theme_gtk_build_dir }}"
+        state: directory
+        mode: '0755'
+        owner: "{{ remote_regular_user }}"
+        group: "{{ remote_regular_user }}"
+
+    - name: Clone WhiteSur GTK repository
+      ansible.builtin.git:
+        repo: 'https://github.com/vinceliuice/WhiteSur-gtk-theme.git'
+        dest: "{{ theme_gtk_build_dir }}"
+        force: true
+      become: false
+      become_user: "{{ remote_regular_user }}"
+
+    - name: Build and install GTK Theme
+      ansible.builtin.command: ./install.sh
+      args:
+        chdir: "{{ theme_gtk_build_dir }}"
+      become: false
+      become_user: "{{ remote_regular_user }}"
+
+    - name: Add Flatpak Tweaks
+      ansible.builtin.command: ./tweaks.sh -F
+      args:
+        chdir: "{{ theme_gtk_build_dir }}"
+      become: false
+      become_user: "{{ remote_regular_user }}"
+
+    - name: Remove GTK build directory
+      ansible.builtin.file:
+        path: "{{ theme_gtk_build_dir }}"
+        state: absent
 
     
