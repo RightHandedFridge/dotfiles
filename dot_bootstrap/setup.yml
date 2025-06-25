@@ -164,4 +164,103 @@
         path: "{{ theme_gtk_build_dir }}"
         state: absent
 
+      # --- Install WhiteSur KDE Theme ---
+    - name: Define temporary build directory for WhiteSur KDE
+      ansible.builtin.set_fact:
+        theme_kde_build_dir: "/tmp/theme_kde_build_{{ ansible_facts['user_id'] }}"
+
+    - name: Create WhiteSur KDE build directory
+      ansible.builtin.file:
+        path: "{{ theme_kde_build_dir }}"
+        state: directory
+        mode: '0755'
+        owner: "{{ remote_regular_user }}"
+        group: "{{ remote_regular_user }}"
+
+    - name: Clone WhiteSur KDE repository
+      ansible.builtin.git:
+        repo: 'https://github.com/vinceliuice/WhiteSur-kde.git'
+        dest: "{{ theme_kde_build_dir }}"
+        force: true
+      become: false
+      become_user: "{{ remote_regular_user }}"
+
+    - name: Build and install KDE Theme
+      ansible.builtin.command: ./install.sh
+      args:
+        chdir: "{{ theme_kde_build_dir }}"
+      become: false
+      become_user: "{{ remote_regular_user }}"
+
+    - name: Remove KDE build directory
+      ansible.builtin.file:
+        path: "{{ theme_kde_build_dir }}"
+        state: absent
+
+    # --- Install WhiteSur Icon Theme ---
+    - name: Define temporary build directory for WhiteSur Icon Theme
+      ansible.builtin.set_fact:
+        icon_theme_build_dir: "/tmp/icon_theme_build_{{ ansible_facts['user_id'] }}"
+
+    - name: Create WhiteSur Icon Theme build directory
+      ansible.builtin.file:
+        path: "{{ icon_theme_build_dir }}"
+        state: directory
+        mode: '0755'
+        owner: "{{ remote_regular_user }}"
+        group: "{{ remote_regular_user }}"
+
+    - name: Clone WhiteSur Icon Theme repository
+      ansible.builtin.git:
+        repo: 'https://github.com/vinceliuice/WhiteSur-icon-theme.git'
+        dest: "{{ icon_theme_build_dir }}"
+        force: true
+      become: false
+      become_user: "{{ remote_regular_user }}"
+
+    - name: Build and install WhiteSur Icon Theme
+      ansible.builtin.command: ./install.sh
+      args:
+        chdir: "{{ icon_theme_build_dir }}"
+      become: false
+      become_user: "{{ remote_regular_user }}"
+
+    - name: Remove WhiteSur Icon Theme build directory
+      ansible.builtin.file:
+        path: "{{ icon_theme_build_dir }}"
+        state: absent
+
+    # --- Install WhiteSur Cursors Theme ---
+    - name: Define temporary build directory for WhiteSur Cursors
+      ansible.builtin.set_fact:
+        cursors_theme_build_dir: "/tmp/cursors_theme_build_{{ ansible_facts['user_id'] }}"
+
+    - name: Create WhiteSur Cursors build directory
+      ansible.builtin.file:
+        path: "{{ cursors_theme_build_dir }}"
+        state: directory
+        mode: '0755'
+        owner: "{{ remote_regular_user }}"
+        group: "{{ remote_regular_user }}"
+
+    - name: Clone WhiteSur Cursors repository
+      ansible.builtin.git:
+        repo: 'https://github.com/vinceliuice/WhiteSur-cursors.git'
+        dest: "{{ cursors_theme_build_dir }}"
+        force: true
+      become: false
+      become_user: "{{ remote_regular_user }}"
+
+    - name: Build and install WhiteSur Cursors Theme
+      ansible.builtin.command: ./install.sh
+      args:
+        chdir: "{{ cursors_theme_build_dir }}"
+      become: false
+      become_user: "{{ remote_regular_user }}"
+
+    - name: Remove WhiteSur Cursors build directory
+      ansible.builtin.file:
+        path: "{{ cursors_theme_build_dir }}"
+        state: absent
+
     
