@@ -71,7 +71,7 @@
             - org.kde.krita
 
             #Themes
-            - org.kde.KStyle.Kvantum
+            - org.kde.KStyle.Kvantum/x86_64/6.6
 
     - name: Fix Flatpak Themes
       ansible.builtin.command: flatpak override --env=QT_STYLE_OVERRIDE=kvantum --filesystem=xdg-config/Kvantum:ro
