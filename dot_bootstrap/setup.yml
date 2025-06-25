@@ -43,7 +43,6 @@
           # Creative
           - krita
           - kdenlive
-          - libreoffice
         state: present
         update_cache: true
 
@@ -66,6 +65,7 @@
             - org.keepassxc.KeePassXC
             - org.videolan.VLC
             - com.protonvpn.www
+            - org.libreoffice.LibreOffice
 
             #Creative
             - com.obsproject.Studio
