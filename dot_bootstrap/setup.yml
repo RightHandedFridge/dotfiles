@@ -265,4 +265,12 @@
         path: "{{ cursors_theme_build_dir }}"
         state: absent
 
+    - name: Enable Syncthing Service
+      ansible.builtin.systemd:
+        name: syncthing
+        scope: user
+        state: started
+        enabled: yes
+      become: true
+      become_user: rhf
     
