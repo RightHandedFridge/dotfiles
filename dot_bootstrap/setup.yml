@@ -20,6 +20,7 @@
           # - Printers
           - foomatic-db
           - system-config-printer
+          - cups
 
           # - Scanner
           - sane
