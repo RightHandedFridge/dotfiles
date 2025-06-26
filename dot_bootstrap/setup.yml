@@ -16,11 +16,12 @@
           - git
           - base-devel
 
-          # Printers
+          # Hardware
+          # - Printers
           - foomatic-db
           - system-config-printer
 
-          # Scanner
+          # - Scanner
           - sane
           - skanpage
 
