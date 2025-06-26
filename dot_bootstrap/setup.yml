@@ -16,8 +16,13 @@
           - git
           - base-devel
 
-          # Drivers
+          # Printers
           - foomatic-db
+          - system-config-printer
+
+          # Scanner
+          - sane
+          - skanpage
 
           # Fonts
           - inter-font
