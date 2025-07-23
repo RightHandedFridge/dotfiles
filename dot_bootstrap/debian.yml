@@ -1,0 +1,45 @@
+﻿# debian_setup.yml
+---
+- name: Debian Specific Setup
+  hosts: localhost
+  connection: local
+  become: true
+  gather_facts: true
+
+  vars:
+    remote_regular_user: "{{ ansible_env.SUDO_USER or ansible_user_id }}"
+
+  tasks:
+    - name: Install APT Packages
+      ansible.builtin.apt:
+        name:
+          # Build Tools
+          - git
+
+          # Fonts
+          - fonts-inter
+          - fonts-inter-variable
+
+          # Tools
+          - android-sdk-platform-tools # Equivalent to android-tools (platform tools only)
+          - syncthing
+          - fastfetch
+          - tealdeer
+          - usbutils
+          - btop
+          - gwenview
+
+          # DE
+          - kde-config-flatpak
+
+          # GUI
+          - alacritty # If available in Debian repos, else manual/snap/flatpak
+
+          # Themes
+          - qt5-style-plugins # For Kvantum support if not directly available
+          - kvantum # If available in Debian repos directly
+
+          # Add flatpak installation here
+          - flatpak 
+        state: present
+        update_cache: true

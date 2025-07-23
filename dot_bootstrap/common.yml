@@ -1,5 +1,6 @@
+﻿# common_setup.yml
 ---
-- name: Setup
+- name: Common Setup
   hosts: localhost
   connection: local
   become: true
@@ -9,51 +10,7 @@
     remote_regular_user: "{{ ansible_env.SUDO_USER or ansible_user_id }}"
 
   tasks:
-    - name: Install Pacman Packages
-      ansible.builtin.pacman:
-        name:
-          # Build Tools
-          - git
-          - base-devel
-
-          # Hardware
-          # - Printers
-          - foomatic-db
-          - system-config-printer
-          - cups
-
-          # - Scanner
-          - sane
-          - skanpage
-
-          # Fonts
-          - inter-font
-
-          # Tools
-          - android-tools
-          - syncthing
-          - fastfetch
-          - tealdeer
-          - usbutils
-          - btop
-          - gwenview
-
-          # DE
-          - flatpak-kcm
-
-          # GUI
-          - alacritty
-
-          # Themes
-          - kvantum
-
-          # Creative
-          - krita
-          - kdenlive
-        state: present
-        update_cache: true
-
-    # --- Install and Configure Flatpaks --- 
+    # --- Install and Configure Flatpaks (Assuming Flatpak is installed by OS-specific playbook) ---
     - name: Install flatpak packages
       community.general.flatpak:
         name:
@@ -81,59 +38,16 @@
 
             #Themes
             - org.kde.KStyle.Kvantum/x86_64/6.6
+        state: present
 
     - name: Fix Flatpak Themes
       ansible.builtin.command: flatpak override --env=QT_STYLE_OVERRIDE=kvantum --env=GTK_THEME=WhiteSur-Dark --filesystem=xdg-config/Kvantum:ro
       become: true
-    
-    # --- Install yay AUR Helper from source ---
-    - name: Check if yay binary exists
-      ansible.builtin.command: which yay
-      register: yay_check
-      ignore_errors: true
-      changed_when: false
+      # This task might need to be run as the regular user if flatpak override is user-specific
+      # become: false
+      # become_user: "{{ remote_regular_user }}"
 
-    - name: Set fact if yay exists
-      ansible.builtin.set_fact:
-        yay_exists: "{{ yay_check.rc == 0 }}"
-
-    - name: Define temporary build directory for yay
-      ansible.builtin.set_fact:
-        yay_build_dir: "/tmp/yay_build_{{ ansible_facts['user_id'] }}"
-
-    - name: Create yay build directory
-      ansible.builtin.file:
-        path: "{{ yay_build_dir }}"
-        state: directory
-        mode: '0755'
-        owner: "{{ remote_regular_user }}"
-        group: "{{ remote_regular_user }}"
-      when: not yay_exists
-
-    - name: Clone yay AUR repository
-      ansible.builtin.git:
-        repo: 'https://aur.archlinux.org/yay.git'
-        dest: "{{ yay_build_dir }}"
-        force: true
-      become: false
-      become_user: "{{ remote_regular_user }}"
-      when: not yay_exists
-
-    - name: Build and install yay
-      ansible.builtin.command: makepkg -si --noconfirm
-      args:
-        chdir: "{{ yay_build_dir }}"
-      become: false
-      become_user: "{{ remote_regular_user }}"
-      when: not yay_exists
-
-    - name: Remove yay build directory
-      ansible.builtin.file:
-        path: "{{ yay_build_dir }}"
-        state: absent
-      when: not yay_exists
-
-      # --- Install WhiteSur GTK Theme ---
+    # --- Install WhiteSur GTK Theme ---
     - name: Define temporary build directory for WhiteSur GTK
       ansible.builtin.set_fact:
         theme_gtk_build_dir: "/tmp/theme_gtk_build_{{ ansible_facts['user_id'] }}"
@@ -173,7 +87,7 @@
         path: "{{ theme_gtk_build_dir }}"
         state: absent
 
-      # --- Install WhiteSur KDE Theme ---
+    # --- Install WhiteSur KDE Theme ---
     - name: Define temporary build directory for WhiteSur KDE
       ansible.builtin.set_fact:
         theme_kde_build_dir: "/tmp/theme_kde_build_{{ ansible_facts['user_id'] }}"
@@ -279,5 +193,4 @@
         state: started
         enabled: yes
       become: true
-      become_user: rhf
-    
+      become_user: rhf # Consider making this dynamic or using remote_regular_user if appropriate

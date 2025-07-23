@@ -1,11 +1,92 @@
 #!/bin/bash
-# This comment line below triggers Chezmoi to re-run this script
-# if the content of 'dot_bootstrap/setup.yml' changes.
-# chezmoi:checksum {{ joinPath .chezmoi.sourceDir "dot_bootstrap/setup.yml" }}
+# chezmoi:checksum {{ joinPath .chezmoi.sourceDir "dot_bootstrap/common_setup.yml" }}
+# chezmoi:checksum {{ joinPath .chezmoi.sourceDir "dot_bootstrap/arch_setup.yml" }}
+# chezmoi:checksum {{ joinPath .chezmoi.sourceDir "dot_bootstrap/debian_setup.yml" }}
 
-if command -v ansible-playbook &> /dev/null; then
-    ansible-playbook -vv {{ joinPath .chezmoi.sourceDir "dot_bootstrap/setup.yml" | quote }} --ask-become-pass
-else
-    echo "Ansible playbook not found. Please install Ansible." >&2
-    exit 1
+# --- Function to install Ansible based on detected OS ---
+install_ansible() {
+    local detected_os_family=$1
+    echo "Ansible playbook command not found. Attempting to install Ansible for $detected_os_family..." >&2
+
+    case "$detected_os_family" in
+        arch)
+            sudo pacman -S --noconfirm ansible
+            ;;
+        debian)
+            sudo apt update
+            sudo apt install --no-install-recommends --yes ansible
+            ;;
+        *)
+            echo "Unsupported distribution for automatic Ansible installation: $detected_os_family. Please install Ansible manually." >&2
+            exit 1
+            ;;
+    esac
+
+    # Verify installation
+    if ! command -v ansible-playbook &> /dev/null; then
+        echo "Failed to install Ansible. Please install it manually and re-run." >&2
+        exit 1
+    fi
+    echo "Ansible installed successfully."
+}
+
+# --- Detect Operating System ---
+OS_FAMILY=""
+if [ -f /etc/os-release ]; then
+    . /etc/os-release
+    case "$ID_LIKE" in
+        *debian*)
+            OS_FAMILY="debian"
+            ;;
+        *arch*)
+            OS_FAMILY="arch"
+            ;;
+        *)
+            OS_FAMILY="$ID" # Fallback to specific ID if ID_LIKE isn't enough
+            ;;
+    esac
+elif [ -f /etc/debian_version ]; then # Older Debian fallback
+    OS_FAMILY="debian"
+elif [ -f /etc/arch-release ]; then # Older Arch fallback
+    OS_FAMILY="arch"
 fi
+
+echo "Detected OS family: $OS_FAMILY"
+
+# --- Main Logic: Install Ansible if needed, then run playbooks ---
+
+# 1. Ensure Ansible is installed
+if ! command -v ansible-playbook &> /dev/null; then
+    install_ansible "$OS_FAMILY"
+fi
+
+# 2. Run OS-specific playbook FIRST
+case "$OS_FAMILY" in
+    arch)
+        echo "Running Arch Linux specific setup playbook..."
+        ansible_playbook -vv {{ joinPath .chezmoi.sourceDir "dot_bootstrap/arch.yml" | quote }} --ask-become-pass || {
+            echo "Arch Linux specific playbook failed. Exiting." >&2
+            exit 1
+        }
+        ;;
+    debian)
+        echo "Running Debian specific setup playbook..."
+        ansible_playbook -vv {{ joinPath .chezmoi.sourceDir "dot_bootstrap/debian.yml" | quote }} --ask-become-pass || {
+            echo "Debian specific playbook failed. Exiting." >&2
+            exit 1
+        }
+        ;;
+    *)
+        echo "No specific playbook for $OS_FAMILY. Proceeding to common setup." >&2
+        ;;
+esac
+
+# 3. Run common playbook (after OS-specific setup)
+echo "Running common setup playbook..."
+ansible_playbook -vv {{ joinPath .chezmoi.sourceDir "dot_bootstrap/common.yml" | quote }} --ask-become-pass || {
+    echo "Common playbook failed. Exiting." >&2
+    exit 1
+}
+
+echo "Ansible setup complete."
+exit 0
