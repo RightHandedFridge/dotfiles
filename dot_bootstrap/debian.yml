@@ -36,8 +36,7 @@
           - alacritty # If available in Debian repos, else manual/snap/flatpak
 
           # Themes
-          - qt5-style-plugins # For Kvantum support if not directly available
-          - kvantum # If available in Debian repos directly
+          - qt-style-kvantum # If available in Debian repos directly
 
           # Add flatpak installation here
           - flatpak 
