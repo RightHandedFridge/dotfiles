@@ -10,7 +10,18 @@
     remote_regular_user: "{{ ansible_env.SUDO_USER or ansible_user_id }}"
 
   tasks:
-    # --- Install and Configure Flatpaks (Assuming Flatpak is installed by OS-specific playbook) ---
+    # --- Ensure Flatpak Flathub remote is added ---
+    - name: Add Flathub remote (repository)
+      community.general.flatpak_remote:
+        name: flathub
+        flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+        state: present
+        method: system # Add this to ensure it's added system-wide
+      # This task should typically run with `become: true` as it modifies system-wide Flatpak remotes.
+      # If you prefer user-specific Flatpak installs, you'd use `method: user` and `become: false`.
+
+
+    # --- Install and Configure Flatpaks (Now Flathub remote is available) ---
     - name: Install flatpak packages
       community.general.flatpak:
         name:
@@ -46,6 +57,8 @@
       # This task might need to be run as the regular user if flatpak override is user-specific
       # become: false
       # become_user: "{{ remote_regular_user }}"
+
+    # ... (rest of your common_setup.yml tasks for themes, syncthing, etc., remain the same) ...
 
     # --- Install WhiteSur GTK Theme ---
     - name: Define temporary build directory for WhiteSur GTK
