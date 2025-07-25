@@ -64,14 +64,14 @@ fi
 case "$OS_FAMILY" in
     arch)
         echo "Running Arch Linux specific setup playbook..."
-        ansible-playbook -vv {{ joinPath .chezmoi.sourceDir "dot_bootstrap/arch.yml" | quote }} --ask-become-pass || {
+        ansible-playbook -vvvv {{ joinPath .chezmoi.sourceDir "dot_bootstrap/arch.yml" | quote }} --ask-become-pass || {
             echo "Arch Linux specific playbook failed. Exiting." >&2
             exit 1
         }
         ;;
     debian)
         echo "Running Debian specific setup playbook..."
-        ansible-playbook -vv {{ joinPath .chezmoi.sourceDir "dot_bootstrap/debian.yml" | quote }} --ask-become-pass || {
+        ansible-playbook -vvvv {{ joinPath .chezmoi.sourceDir "dot_bootstrap/debian.yml" | quote }} --ask-become-pass || {
             echo "Debian specific playbook failed. Exiting." >&2
             exit 1
         }
@@ -83,7 +83,7 @@ esac
 
 # 3. Run common playbook (after OS-specific setup)
 echo "Running common setup playbook..."
-ansible-playbook -vv {{ joinPath .chezmoi.sourceDir "dot_bootstrap/common.yml" | quote }} --ask-become-pass || {
+ansible-playbook -vvvv {{ joinPath .chezmoi.sourceDir "dot_bootstrap/common.yml" | quote }} --ask-become-pass || {
     echo "Common playbook failed. Exiting." >&2
     exit 1
 }
