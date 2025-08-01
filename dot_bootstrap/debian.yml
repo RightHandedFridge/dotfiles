@@ -37,6 +37,7 @@
 
           # Themes
           - qt-style-kvantum # If available in Debian repos directly
+          - sassc
 
           # Add flatpak installation here
           - flatpak 

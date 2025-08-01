@@ -1,0 +1,59 @@
+# fedora_setup.yml
+---
+- name: Fedora Linux Specific Setup
+  hosts: localhost
+  connection: local
+  become: true
+  gather_facts: true
+
+  vars:
+    remote_regular_user: "{{ ansible_env.SUDO_USER or ansible_user_id }}"
+
+  tasks:
+    - name: Install DNF Packages
+      ansible.builtin.dnf:
+        name:
+          # Build Tools
+          - git
+          - "@development-tools" # Equivalent to base-devel on Fedora, installs common build tools
+
+          # Hardware
+          # Printers
+          - cups
+          - cups-libs
+          - system-config-printer
+
+          # Scanner
+          - sane-backends
+          - skanpage # This package name is likely the same or similar on Fedora
+
+          # Fonts
+          - google-fonts-inter # Common name for Inter font on Fedora
+
+          # Tools
+          - android-tools
+          - syncthing
+          - fastfetch # May require enabling a COPR repository or manual installation if not in official repos
+          - tealdeer
+          - usbutils
+          - btop
+          - gwenview
+
+          # DE (Desktop Environment) specific packages
+          - flatpak-kcm # Specific to KDE, should be available if KDE is installed
+
+          # GUI Applications
+          - alacritty
+
+          # Themes
+          - kvantum # Should be available for KDE theming
+          - sassc
+
+          # Creative Applications
+          - krita
+          - kdenlive
+
+          # Flatpak (for universal package management)
+          - flatpak
+        state: present
+        update_cache: true
