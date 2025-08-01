@@ -2,8 +2,8 @@
 # chezmoi:checksum {{ joinPath .chezmoi.sourceDir "dot_bootstrap/common_setup.yml" }}
 # chezmoi:checksum {{ joinPath .chezmoi.sourceDir "dot_bootstrap/arch_setup.yml" }}
 # chezmoi:checksum {{ joinPath .chezmoi.sourceDir "dot_bootstrap/debian_setup.yml" }}
+# chezmoi:checksum {{ joinPath .chezmoi.sourceDir "dot_bootstrap/fedora_setup.yml" }}
 
-# --- Function to install Ansible based on detected OS ---
 install_ansible() {
     local detected_os_family=$1
     echo "Ansible playbook command not found. Attempting to install Ansible for $detected_os_family..." >&2
@@ -16,13 +16,15 @@ install_ansible() {
             sudo apt update
             sudo apt install --no-install-recommends --yes ansible
             ;;
+        fedora)
+            sudo dnf install -y ansible
+            ;;
         *)
             echo "Unsupported distribution for automatic Ansible installation: $detected_os_family. Please install Ansible manually." >&2
             exit 1
             ;;
     esac
 
-    # Verify installation
     if ! command -v ansible-playbook &> /dev/null; then
         echo "Failed to install Ansible. Please install it manually and re-run." >&2
         exit 1
@@ -30,7 +32,6 @@ install_ansible() {
     echo "Ansible installed successfully."
 }
 
-# --- Detect Operating System ---
 OS_FAMILY=""
 if [ -f /etc/os-release ]; then
     . /etc/os-release
@@ -41,49 +42,60 @@ if [ -f /etc/os-release ]; then
         *arch*)
             OS_FAMILY="arch"
             ;;
+        *fedora*)
+            OS_FAMILY="fedora"
+            ;;
         *)
-            OS_FAMILY="$ID" # Fallback to specific ID if ID_LIKE isn't enough
+            OS_FAMILY="$ID"
             ;;
     esac
-elif [ -f /etc/debian_version ]; then # Older Debian fallback
+elif [ -f /etc/debian_version ]; then
     OS_FAMILY="debian"
-elif [ -f /etc/arch-release ]; then # Older Arch fallback
+elif [ -f /etc/arch-release ]; then
     OS_FAMILY="arch"
+elif [ -f /etc/fedora-release ]; then
+    OS_FAMILY="fedora"
 fi
 
 echo "Detected OS family: $OS_FAMILY"
 
-# --- Main Logic: Install Ansible if needed, then run playbooks ---
-
-# 1. Ensure Ansible is installed
 if ! command -v ansible-playbook &> /dev/null; then
     install_ansible "$OS_FAMILY"
 fi
 
-# 2. Run OS-specific playbook FIRST
+# Run OS-specific playbook FIRST
 case "$OS_FAMILY" in
     arch)
         echo "Running Arch Linux specific setup playbook..."
-        ansible-playbook -vvvv {{ joinPath .chezmoi.sourceDir "dot_bootstrap/arch.yml" | quote }} --ask-become-pass || {
+        ansible-playbook -vvvv {{ joinPath .chezmoi.sourceDir "dot_bootstrap/arch_setup.yml" | quote }} --ask-become-pass || {
             echo "Arch Linux specific playbook failed. Exiting." >&2
             exit 1
         }
         ;;
     debian)
         echo "Running Debian specific setup playbook..."
-        ansible-playbook -vvvv {{ joinPath .chezmoi.sourceDir "dot_bootstrap/debian.yml" | quote }} --ask-become-pass || {
+        ansible-playbook -vvvv {{ joinPath .chezmoi.sourceDir "dot_bootstrap/debian_setup.yml" | quote }} --ask-become-pass || {
             echo "Debian specific playbook failed. Exiting." >&2
             exit 1
         }
         ;;
+    fedora)
+        echo "Running Fedora specific setup playbook..."
+        ansible-playbook -vvvv {{ joinPath .chezmoi.sourceDir "dot_bootstrap/fedora_setup.yml" | quote }} --ask-become-pass || {
+            echo "Fedora specific playbook failed. Exiting." >&2
+            exit 1
+        }
+        ;;
     *)
-        echo "No specific playbook for $OS_FAMILY. Proceeding to common setup." >&2
+        # If no specific playbook is found for the detected OS, exit.
+        echo "No specific playbook found for $OS_FAMILY. Exiting." >&2
+        exit 1
         ;;
 esac
 
-# 3. Run common playbook (after OS-specific setup)
+# Run common playbook (after OS-specific setup)
 echo "Running common setup playbook..."
-ansible-playbook -vvvv {{ joinPath .chezmoi.sourceDir "dot_bootstrap/common.yml" | quote }} --ask-become-pass || {
+ansible-playbook -vvvv {{ joinPath .chezmoi.sourceDir "dot_bootstrap/common_setup.yml" | quote }} --ask-become-pass || {
     echo "Common playbook failed. Exiting." >&2
     exit 1
 }
