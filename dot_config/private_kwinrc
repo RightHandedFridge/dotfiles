@@ -1,21 +1,19 @@
+[Activities][LastVirtualDesktop]
+7e846754-80aa-4ebb-9ac4-b3bf71ce1e90=bbde9b54-5121-4d5e-b315-b6e2c6578f34
 
 [Desktops]
 Id_1=Desktop_1
 Id_2=Desktop_2
 Id_3=Desktop_3
-Id_4=Desktop_4
-Id_5=Desktop_5
-Id_6=Desktop_6
-Id_7=Desktop_7
-Id_8=Desktop_8
+Id_4=bbde9b54-5121-4d5e-b315-b6e2c6578f34
+Id_5=df2080dd-24f3-4321-b1da-0824ff6b2cb1
+Id_6=190ad79e-959a-48eb-a6f8-3e261d642a0b
+Id_7=5bc50445-8576-4c79-b5c8-de30e7255191
+Id_8=99072c39-a2e8-471b-a1ca-9bf22ffec8ab
 Name_1=Browser
 Name_2=Left
 Name_3=Right
 Name_4=Comms
-Name_5=Music
-Name_6=Six
-Name_7=Seven
-Name_8=Eight
 Number=8
 Rows=1
 
@@ -24,7 +22,7 @@ Active=true
 EveningBeginFixed=1830
 Mode=Times
 MorningBeginFixed=0500
-NightTemperature=1500
+NightTemperature=2700
 
 [Plugins]
 krohnkiteEnabled=true
@@ -35,6 +33,15 @@ screenGapBetween=5
 
 [Tiling]
 padding=4
+
+[Tiling][121105d3-0a14-5632-a68b-1d33fe087e56]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
+[Tiling][791a1135-39fc-537b-9d5e-a975e4b72dfa]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
+[Tiling][92e842d7-5928-5c43-884a-4912e7cc82ed]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
 
 [Tiling][f824ba79-54f9-5e18-9654-368eee7cd8f1]
 tiles={"layoutDirection":"horizontal","tiles":[{"width":0.5},{"width":0.5}]}
